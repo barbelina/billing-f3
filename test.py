@@ -5,8 +5,8 @@ import numpy as np
 from st_aggrid import AgGrid, JsCode
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 
-lalu = pd.read_excel("source\mtrt00524.xls")
-akhir = pd.read_excel("source\mtrt00624.xls")
+lalu = pd.read_excel("source//mtrt00524.xls")
+akhir = pd.read_excel("source//mtrt00624.xls")
 
 juruslalu = pd.DataFrame()
 
