@@ -111,7 +111,7 @@ if st.button("Proses"):
         conditions_100 = [(kroscek['SELISIH']>100) | (kroscek['SELISIH']<-100),
                     (kroscek['SELISIH']<100) | (kroscek['SELISIH']>-100)]
     
-        letters = ['Selisih Besar','Normal']
+        letters = ('Selisih Besar','Normal')
     
         kroscek['SELISIH 50%'] = np.select(conditions_50, letters)
         kroscek['SELISIH 100%'] = np.select(conditions_100, letters)
@@ -119,14 +119,14 @@ if st.button("Proses"):
         conditions_sub = [(kroscek['DAYA']==450) | (kroscek['DAYA']==900),
                     (kroscek['DAYA']>900)]
     
-        letters_sub = ['Subs','Nonsubs']
+        letters_sub = ('Subs','Nonsubs')
     
         kroscek['SUBS_NONSUBS'] = np.select(conditions_sub, letters_sub)
     
         conditions_minnol = [(kroscek['DLPD_LALU']=='K KWH NOL') | (kroscek['DLPD_LALU']=='C KWH < 40 JAM'),
                     (kroscek['DLPD_LALU']=='N KWH N O R M A L') | (kroscek['DLPD_LALU']=='J REKENING PECAHAN')]
     
-        letters_minnol = ['Yes','No']
+        letters_minnol = ('Yes','No')
     
         kroscek['MIN_NOL'] = np.select(conditions_minnol, letters_minnol)
         return kroscek
