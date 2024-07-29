@@ -1,15 +1,20 @@
-import pandas as pd
-import streamlit as st
 import numpy as np
+import pandas as pd
 
-from st_aggrid import AgGrid, JsCode
-from st_aggrid.grid_options_builder import GridOptionsBuilder
+# Assuming kroscek is your DataFrame
+# Example DataFrame for demonstration
+data = {'SELISIH': [120, 80, -150, 90, 0]}
+kroscek = pd.DataFrame(data)
 
-arr = [1, 2, 3, 4, 5]
+# Define conditions and corresponding choices
+conditions_100 = [
+    (kroscek['SELISIH'] > 100) | (kroscek['SELISIH'] < -100),
+    (kroscek['SELISIH'] <= 100) & (kroscek['SELISIH'] >= -100)
+]
 
-conditions = [arr > 2, arr < 5]
-choices = [arr, arr * 2]
+letters = ['Selisih Besar', 'Normal']
 
-result = np.select(conditions, choices, default=0)
+# Apply np.select with correct conditions and choices
+kroscek['SELISIH 100%'] = np.select(conditions_100, letters, default='Undefined')
 
-st.write(result)
+print(kroscek)
