@@ -113,9 +113,9 @@ if st.button("Proses"):
     
         letters = ('Selisih Besar','Normal')
     
-        kroscek['SELISIH 50%'] = np.select(conditions_50, letters)
-        kroscek['SELISIH 100%'] = np.select(conditions_100, letters)
-    
+        kroscek['SELISIH 50%'] = np.select(conditions_50, letters, default=kroscek['SELISIH 50%'])
+        kroscek['SELISIH 100%'] = np.select(conditions_100, letters, default=kroscek['SELISIH 100%'])
+
         conditions_sub = [(kroscek['DAYA']==450) | (kroscek['DAYA']==900),
                     (kroscek['DAYA']>900)]
     
@@ -128,7 +128,8 @@ if st.button("Proses"):
     
         letters_minnol = ('Yes','No')
     
-        kroscek['MIN_NOL'] = np.select(conditions_minnol, letters_minnol)
+        kroscek['SUBS_NONSUBS'] = np.select(conditions_sub, letters_sub, default=kroscek['SUBS_NONSUBS'])
+
         return kroscek
     
     def amrFilter(lalu, akhir, blth_lalu, blth_kini):
