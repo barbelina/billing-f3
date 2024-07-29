@@ -97,7 +97,7 @@ if st.button("Proses"):
         kroscek['WBP_AKHIR'] = kroscek_temp['WBP_AKHIR_y']
         kroscek['PAKAI_LALU'] = kroscek_temp['PEMKWH_REAL_x']
         kroscek['PAKAI_AKHIR'] = kroscek_temp['PEMKWH_REAL_y']
-        kroscek['SELISIH'] = kroscek_temp['PEMKWH_REAL_y']-kroscek_temp['PEMKWH_REAL_x']
+        kroscek['SELISIH'] = (kroscek_temp['PEMKWH_REAL_y']-kroscek_temp['PEMKWH_REAL_x'])
         kroscek['SELISIH %'] = (kroscek['SELISIH']/kroscek_temp['PEMKWH_REAL_x'])*100
         kroscek['DLPD_LALU'] = kroscek_temp['DLPD_x']
         kroscek['DLPD_KINI'] = kroscek_temp['DLPD_y']
