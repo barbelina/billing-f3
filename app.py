@@ -97,7 +97,7 @@ if st.button("Proses"):
         kroscek['WBP_AKHIR'] = kroscek_temp['WBP_AKHIR_y']
         kroscek['PAKAI_LALU'] = kroscek_temp['PEMKWH_REAL_x']
         kroscek['PAKAI_AKHIR'] = kroscek_temp['PEMKWH_REAL_y']
-        kroscek['SELISIH'] = (kroscek_temp['PEMKWH_REAL_y']-kroscek_temp['PEMKWH_REAL_x'])
+        kroscek['SELISIH'] = np.array(kroscek_temp['PEMKWH_REAL_y']-kroscek_temp['PEMKWH_REAL_x'])
         kroscek['SELISIH %'] = (kroscek['SELISIH']/kroscek_temp['PEMKWH_REAL_x'])*100
         kroscek['DLPD_LALU'] = kroscek_temp['DLPD_x']
         kroscek['DLPD_KINI'] = kroscek_temp['DLPD_y']
@@ -111,15 +111,15 @@ if st.button("Proses"):
         conditions_100 = [(kroscek['SELISIH']>100) | (kroscek['SELISIH']<-100),
                     (kroscek['SELISIH']<100) | (kroscek['SELISIH']>-100)]
     
-        letters = ('Selisih Besar','Normal')
+        letters = ['Selisih Besar','Normal']
     
-        kroscek['SELISIH 50%'] = np.select(conditions_50, letters, default=kroscek['SELISIH 50%'])
-        kroscek['SELISIH 100%'] = np.select(conditions_100, letters, default=kroscek['SELISIH 100%'])
+        kroscek['SELISIH 50%'] = np.select(conditions_50, letters, default=0])
+        kroscek['SELISIH 100%'] = np.select(conditions_100, letters, default=0)
 
         conditions_sub = [(kroscek['DAYA']==450) | (kroscek['DAYA']==900),
                     (kroscek['DAYA']>900)]
     
-        letters_sub = ('Subs','Nonsubs')
+        letters_sub = ['Subs','Nonsubs']
     
         kroscek['SUBS_NONSUBS'] = np.select(conditions_sub, letters_sub)
     
