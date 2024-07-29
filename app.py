@@ -113,7 +113,7 @@ if st.button("Proses"):
     
         letters = ['Selisih Besar','Normal']
     
-        kroscek['SELISIH 50%'] = np.select(conditions_50, letters, default=0])
+        kroscek['SELISIH 50%'] = np.select(conditions_50, letters, default=0)
         kroscek['SELISIH 100%'] = np.select(conditions_100, letters, default=0)
 
         conditions_sub = [(kroscek['DAYA']==450) | (kroscek['DAYA']==900),
