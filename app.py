@@ -131,7 +131,7 @@ def norm1Filter(lalu, akhir, blth_lalu, blth_kini):
     norm1_df = kroscek[kroscek['DLPD_KINI'].isin(['N KWH N O R M A L'])]
     norm1_df = norm1_df[norm1_df['SELISIH 50%'].isin(["Selisih Besar"])]
     norm1_df = norm1_df[norm1_df['SUBS_NONSUBS'].isin(["Subs"])]
-    norm2_df = norm2_df[norm2_df['SELISIH 100%'].isin(["Selisih Besar"])]
+    norm1_df = norm1_df[norm1_df['SELISIH 100%'].isin(["Selisih Besar"])]
     return norm1_df
 
 def norm2Filter(lalu, akhir, blth_lalu, blth_kini):
