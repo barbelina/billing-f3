@@ -134,8 +134,8 @@ def norm2Filter(lalu, akhir, blth_lalu, blth_kini):
 def minNolFilter(lalu, akhir, blth_lalu, blth_kini):
     kroscek = copyDataframe(lalu, akhir, blth_lalu, blth_kini)
     
-    minNol_df = kroscek[kroscek['DLPD_KINI'].isin(['K KWH NOL'])]
-    minNol_df = minNol_df[minNol_df['MIN_NOL'].isin(['No'])]
+    temp = kroscek[kroscek['DLPD_KINI'].isin(["C KWH < 40 JAM", "K KWH NOL"])]
+    minNol_df = temp[temp['MIN_NOL'].isin(['No'])]
     return minNol_df
 
 def show_image_maks(lalu, akhir, blth_lalu, blth_kini):
