@@ -82,11 +82,11 @@ def copyDataframe(lalu, akhir, blth_lalu, blth_kini):
     kroscek['DAYA'] = kroscek_temp['DAYA']
     kroscek['JAM_NYALA'] = kroscek_temp['JAM_NYALA']
 
-    conditions_50 = [(kroscek['SELISIH']>50) | (kroscek['SELISIH']<-50),
-                (kroscek['SELISIH']<50) | (kroscek['SELISIH']>-50)]
+    conditions_50 = [(kroscek['SELISIH %']>50) | (kroscek['SELISIH %']<-50),
+                (kroscek['SELISIH %']<50) | (kroscek['SELISIH %']>-50)]
 
-    conditions_100 = [(kroscek['SELISIH']>100) | (kroscek['SELISIH']<-100),
-                (kroscek['SELISIH']<100) | (kroscek['SELISIH']>-100)]
+    conditions_100 = [(kroscek['SELISIH %']>100) | (kroscek['SELISIH %']<-100),
+                (kroscek['SELISIH %']<100) | (kroscek['SELISIH %']>-100)]
 
     letters = ['Selisih Besar','Normal']
 
@@ -109,17 +109,6 @@ def copyDataframe(lalu, akhir, blth_lalu, blth_kini):
 
     return kroscek
 
-def amrFilter(lalu, akhir, blth_lalu, blth_kini):
-    kroscek = copyDataframe(lalu, akhir, blth_lalu, blth_kini)
-    criteria1 = ['L STAND MUNDUR', 'N KWH N O R M A L', 'K KWH NOL', 
-                 'C KWH < 40 JAM', 'J REKENING PECAHAN']
-    
-    amr_df = kroscek[kroscek['DLPD_KINI'].isin(criteria1)]
-    amr_df = amr_df[amr_df['SELISIH 50%'].isin(["Selisih Besar"])]
-    del amr_df['FOTO_LALU']
-    del amr_df['FOTO_AKHIR']
-    return amr_df
-
 def maksFilter(lalu, akhir, blth_lalu, blth_kini):
     kroscek = copyDataframe(lalu, akhir, blth_lalu, blth_kini)
     maks_df = kroscek[kroscek['DLPD_KINI'].isin(['L STAND METER MUNDUR'])]
@@ -128,18 +117,18 @@ def maksFilter(lalu, akhir, blth_lalu, blth_kini):
 def norm1Filter(lalu, akhir, blth_lalu, blth_kini):
     kroscek = copyDataframe(lalu, akhir, blth_lalu, blth_kini)
     
-    norm1_df = kroscek[kroscek['DLPD_KINI'].isin(['N KWH N O R M A L', 'J REKENING PECAHAN'])]
-    norm1_df = norm1_df[norm1_df['SELISIH 50%'].isin(["Selisih Besar"])]
-    norm1_df = norm1_df[norm1_df['SUBS_NONSUBS'].isin(["Subs"])]
-    norm1_df = norm1_df[norm1_df['SELISIH 100%'].isin(["Selisih Besar"])]
+    temp = kroscek[kroscek['DLPD_KINI'].isin(['N KWH N O R M A L', 'J REKENING PECAHAN'])]
+    temp_1 = temp[temp['SELISIH 50%'].isin(["Selisih Besar"])]
+    temp_2 = temp_1[temp_1['SUBS_NONSUBS'].isin(["Subs"])]
+    norm1_df = temp_2[temp_2['SELISIH 100%'].isin(["Selisih Besar"])]
     return norm1_df
 
 def norm2Filter(lalu, akhir, blth_lalu, blth_kini):
     kroscek = copyDataframe(lalu, akhir, blth_lalu, blth_kini)
     
-    norm2_df = kroscek[kroscek['DLPD_KINI'].isin(['N KWH N O R M A L', 'J REKENING PECAHAN'])]
-    norm2_df = norm2_df[norm2_df['SELISIH 50%'].isin(["Selisih Besar"])]
-    norm2_df = norm2_df[norm2_df['SUBS_NONSUBS'].isin(["Nonsubs"])]
+    temp = kroscek[kroscek['DLPD_KINI'].isin(['N KWH N O R M A L', 'J REKENING PECAHAN'])]
+    temp_1 = temp[temp['SELISIH 50%'].isin(["Selisih Besar"])]
+    norm2_df = temp_1[temp_1['SUBS_NONSUBS'].isin(["Nonsubs"])]
     return norm2_df
 
 def minNolFilter(lalu, akhir, blth_lalu, blth_kini):
@@ -306,7 +295,7 @@ if st.button("Proses"):
     
     with col[1]:
         st.markdown('#### Main')
-        tabs = st.tabs(['SEMUA','KWH MAKS', 'NORMAL', 'NORMAL > 900', '0-40 JN', 'AMR'])
+        tabs = st.tabs(['SEMUA','KWH MAKS', 'NORMAL', 'NORMAL > 900', '0-40 JN'])
         for i, tab in enumerate(tabs):
             tabs[i].write()
 
@@ -329,7 +318,3 @@ if st.button("Proses"):
     with tabs[4]:
         st.write("KWH Nol 40 JN")
         show_image_minnol(lalu, akhir, blth_lalu, blth_kini)
-
-    with tabs[5]:
-        st.write("Hasil AMR")
-        st.dataframe(amrFilter(lalu, akhir, blth_lalu, blth_kini))
